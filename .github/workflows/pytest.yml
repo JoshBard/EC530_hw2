@@ -1,33 +1,38 @@
-name: Run Pytest on Push
+name: Python
 
 on:
   push:
     branches:
       - main
-      - develop
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: "3.8"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-junitxml
+          pip install pytest
 
-      - name: Run tests and generate XML report
-        run: pytest tests/stub_tests.py --junitxml=pytest-report.xml
+      - name: Add Root to Python Path
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
-      - name: Upload test results
+      - name: Run Tests
+        run: pytest tests/stub_tests.py
+
+      - name: Upload Test Results
         uses: actions/upload-artifact@v4
         with:
           name: pytest-results
