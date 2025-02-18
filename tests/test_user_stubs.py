@@ -25,7 +25,6 @@ def test_create_user(capfd):
     assert dummy_phone.lower() in out.lower()
     assert dummy_email.lower() in out.lower()
 
-
 def test_delete_user(capfd):
     # Dummy data for testing delete_user
     dummy_name = "Alice"
@@ -34,13 +33,14 @@ def test_delete_user(capfd):
     # Call the delete_user function with dummy data
     delete_user(dummy_name, dummy_username)
     
-    # Capture the output
+    # Capture the output and clean it up by joining words with a single space
     out, _ = capfd.readouterr()
+    out_cleaned = " ".join(out.split())
     
-    # Assert that the output contains the expected strings
-    assert f"User with name: {dummy_name}" in out
-    assert f"and username: {dummy_username}" in out
-    assert "deleted." in out
+    # Assert that the cleaned output contains the expected substrings
+    assert f"User with name: {dummy_name}" in out_cleaned
+    assert f"and username: {dummy_username}" in out_cleaned
+    assert "deleted." in out_cleaned
 
 def test_update_user(capfd):
     # Dummy data for testing update_user
@@ -52,15 +52,17 @@ def test_update_user(capfd):
     # Call the update_user function with dummy data
     update_user(dummy_name, dummy_username, dummy_phone, dummy_email)
     
-    # Capture the output
+    # Capture and clean the output
     out, _ = capfd.readouterr()
+    out_cleaned = " ".join(out.split())
     
-    # Assert that the output contains the expected strings
-    assert "User updated to have the following fields" in out
-    assert f"Name: {dummy_name}" in out
-    assert f"Username: {dummy_username}" in out
-    assert f"Phone number: {dummy_phone}" in out
-    assert f"Email: {dummy_email}" in out
+    # Assert that the cleaned output contains the expected substrings
+    assert "User updated to have the following fields" in out_cleaned
+    assert f"Name: {dummy_name}" in out_cleaned
+    assert f"Username: {dummy_username}" in out_cleaned
+    assert f"Phone number: {dummy_phone}" in out_cleaned
+    assert f"Email: {dummy_email}" in out_cleaned
+
 
 def test_read_user(capfd):
     # Dummy values for testing
