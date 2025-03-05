@@ -31,10 +31,10 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest tests/test_device_stubs.py
-          pytest tests/test_house_stubs.py
-          pytest tests/test_room_stubs.py
-          pytest tests/test_user_stubs.py
+          pytest tests/test_device.py
+          pytest tests/test_house.py
+          pytest tests/test_room.py
+          pytest tests/test_user.py
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
